@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Goonogo</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/header.css">
+	<script src="static/js/libs/jquery-3.3.1.js"></script>
+</head>
+
+<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+		font-family: Helvetica Neue;
+		font-weight: 300;
+		word-break: break-all;
+		hyphens: auto;
+	}
+
+	b{
+		font-weight: 400;
+	}
+
+	body{
+		padding-bottom: 20vh;
+	}
+
+	a{
+		text-decoration: none;
+		color: #000;
+	}
+
+
+	
+	#wrapper{
+		width: 80vw;
+		margin: auto;
+		margin-top: 10vh;
+	}
+
+	#searchMenu{
+		width: 10vw;
+		display: inline-block;
+		border-width: 0 1px 0 0;
+		border-style: solid;
+		border-color: #AAA;
+		padding: 20px 0;
+	}
+	#searchMenu span{
+		width: 10vw;
+		display: inline-block;
+		text-align: center;
+		height: 40px;
+		line-height: 40px;
+		border-color: #AAA;
+		border-style: solid;
+		border-width: 0 0 1px 0;
+		cursor: pointer;
+	}
+
+	#searchMenu span:hover{
+		background: #DDD;
+	}
+
+	#search_results{
+		display: inline-block;
+		width: 60vw;
+		vertical-align: top;
+		padding: 0 1vw;
+	}
+
+	.result{
+		width: 50vw;
+		margin: 5px auto;
+		background: #a3c5d9;
+		box-sizing: border-box;
+		padding: 2vw;
+		border-radius: 10px;
+		cursor: pointer;
+	}
+	.result:hover{
+		background: #85A8BD;
+	}
+
+	.results{
+		max-height: 40vh;
+		overflow: scroll;
+	}
+
+	.resultName{
+		font-weight: 400;
+	}
+
+
+	
+</style>
+
+<body>
+	
+	{% include "header_searchbar.html" %}
+
+	<br>
+
+	<div id="wrapper">
+		<div id="searchMenu">
+			<span>Todos</span>
+			<span>Profesores</span>
+			<span>Clases</span>
+			<span>Estudiantes</span>
+		</div>
+		<div id="search_results">
+			<span>Mostrando resultados para <b>{{data}}</b></span>
+			
+			<br><br>
+			
+			<span><b>Profesores</b></span><br><br>
+			<div id="teachersResults" class="results"></div>
+
+			<br><br>
+
+			<span><b>Cursos</b></span><br><br>
+			<div id="subjectsResults" class="results"></div>
+
+			<br><br>
+
+			<span><b>Estudiantes</b></span><br><br>
+			<div id="studentsResults" class="results"></div>
+		</div>
+	</div>
+	
+	
+</body>
+
+<script type="text/javascript">
+	var search = "{{ data }}";
+	var urlteach = "/search/teachers/" + search;
+	var urlsubje = "/search/subjects/" + search;
+	var urlstude = "/search/students/" + search;
+
+	$.getJSON(urlteach, function(data){
+		$.each(data,function(i, teacher){
+			var a = "<a href='/teacher_profile/"+teacher.id+"'><div class='result'><span class='resultName'>"+teacher.name+" "+teacher.lastname+"</span><br>";
+			a = a + "<p>"+teacher.information+"</p></div></a>";
+			$("<div/>", {html:a}).appendTo("#teachersResults");
+
+		});
+	});
+
+	$.getJSON(urlsubje, function(data){
+		$.each(data,function(i, subject){
+			var a = "<a href='/subject_profile/"+subject.id+"'><div class='result'>";
+			a = a + "<span class='resultName'>"+subject.name+"</span>";
+			a = a + "<p>"+subject.summary+"</p></div></a>";
+			$("<div/>", {html:a}).appendTo("#subjectsResults");
+
+		});
+	});
+
+	$.getJSON(urlstude, function(data){
+		$.each(data,function(i, student){
+			var a = "<a href='/student_profile/"+student.id+"'><div class='result'>";
+			a = a + "<span class='resultName'>" + student.name + " " + student.lastname +"</span><p>";
+			a = a + student.username + "</div></a>"
+			$("<div/>", {html:a}).appendTo("#studentsResults");
+
+		});
+	});
+
+	
+</script>
+
+</html>

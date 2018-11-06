@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Goonogo - Regístrate</title>
+	<meta charset="utf-8">
+	<script src="static/js/libs/jquery-3.3.1.js"></script>
+</head>
+
+<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+		font-family: Helvetica Neue;
+		font-weight: 300;
+	}
+
+	#wrapper{
+		width: 80vw;
+		margin:auto;
+		padding-top: 3vh;
+	}
+
+	#subjects{
+		box-sizing: border-box;
+		padding: 2vh 1vw;
+		width: 80vw;
+		display: 
+	}
+
+	.subject, .selectedsubject{
+		height: 15vh;
+		width: 15vh;
+		font-size: 17px;
+		line-height: 15vh;
+		padding: 1vw;
+		border-radius: 20px;
+		opacity: 0.8;
+		display: inline-block;
+		text-align: center;
+		margin: 10px;
+		overflow: hidden;
+		cursor: pointer;
+
+		background: #728da0;
+	}
+
+	.subject:hover{
+		opacity: 0.9;
+	}
+
+	.selectedsubject{
+		opacity: 1;
+	}
+
+	#continue{
+		box-sizing: border-box;
+		display: inline-block;
+		text-align: center;
+		font-size: 17px;
+		line-height: 39px;
+		width: 5vw;
+		height: 40px;
+		background:#a3c5d9;
+		border-radius: 10px;
+		box-shadow: 0 3px #4a6270;
+		cursor: pointer;
+		float: right;
+		outline: none;
+		margin-right: 5vw;
+	}
+
+	#continue:hover{
+		background: #81A3B7;
+	}
+
+	#continue:active{
+		box-shadow: 0 0 #000;
+		margin-top: 3px;
+	}
+
+	h2{
+		margin: 5vh 0 3vh 0;
+	}
+
+	#header{
+		height: 8vh;
+		width: 100vw;
+		background: #85A8BD;
+		position: fixed;
+	}
+
+	#headerWrapper{
+		width: 80vw;
+		margin: auto;
+	}
+
+</style>
+
+<body>
+
+<div id="header">
+	<div id="headerWrapper">
+		<img src="static/images/Logo2.png" style=" height: 4vh; margin-top: 2vh;">
+	</div>
+</div>
+
+<br>
+
+<div id="wrapper">
+	<h2>¿Qué cursos te gustaría enseñar?</h2>
+	<div id="subjects">
+		<center>
+
+		</center>
+	</div>
+	<span id="continue" onclick="send()">Seguir</span>
+	
+</div>
+</body>
+
+<script type="text/javascript">
+
+var selected_subjects = [];
+var current_user_id;
+
+$.getJSON("/subjects", function(data){
+	$.each(data, function(i, sub){
+		var name = "subject" + sub.id;
+		var temp = "<span class='subject' id='"+name+"' onclick=\"select('"+name+"',"+sub.id+")\" >";
+		temp = temp+sub.name+"</span>"
+		$("<span/>", {html:temp}).appendTo("#subjects");
+	});
+});
+
+$.getJSON("/current_user", function(data){
+	current_user_id = data.id;
+});
+
+
+function select(str, num){
+	spn = document.getElementById(str);
+	var i = selected_subjects.indexOf(num);
+	if(i == -1){
+		spn.classList.remove("subject");
+		spn.classList.add("selectedsubject");
+		selected_subjects.push(num);
+	} else{
+		spn.classList.remove("selectedsubject");
+		spn.classList.add("subject");
+		selected_subjects.splice(i, 1);
+	}	
+
+}
+
+
+function subject_teacher(){
+	$.ajax({
+		url : '/subject_teacher',
+		type: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			"content": content,
+			"user_from_id": current_user_id,
+			"user_to_id": current_to_id
+		}),
+		dataType:'json'
+	});
+}
+
+
+function send(){
+	$.ajax({
+		url : '/clean_teacher_subject',
+		type: 'DELETE',
+		async: false,
+	});
+	
+	for(i = 0; i<selected_subjects.length; i = i+1){
+		$.ajax({
+			url : '/teacher_subject',
+			type: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				"teacher_id": current_user_id,
+				"subject_id": selected_subjects[i]
+			}),
+			dataType:'json'
+		});
+	}
+
+	window.location = "/userAccount";
+}
+
+</script>
+
+
+
+</html>
+
+
+
+
+
+
+
+
+

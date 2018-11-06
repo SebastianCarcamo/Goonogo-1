@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil de Profesor</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/header.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/perfil_profesor.css">
+    <script src="/static/js/libs/jquery-3.3.1.js"></script>
+</head>
+
+
+<body>
+
+{% if user_profile %}
+<div id="update" class="modal">
+	<div class="modal-content">
+		<form action="/teachers/update" method="post" id="formData">
+		<div id="textoProfesor">
+			<h3>Actualiza tu información</h3>
+			<center>
+				<span class="error" style="display: none" id ="errorName">El nombre debe tener menos de 50 caracteres y solo contener caractes alfabéticos</span>
+				<input id="formName" type="text" name="name" class="text" placeholder="Nombre" onchange="check_str('errorName', 'formName', 0)">
+
+				<span class="error" style="display: none" id="errorLastname">El apellido debe tener menos de 50 caracteres y solo contener caractes alfabéticos.</span>
+				<input id="formLastname" type="text" name="lastname" class="text" placeholder="Apellido" onchange="check_str('errorLastname', 'formLastname', 1)">
+
+				<span class="error" style="display: none" id="errorta">La descripción debe contener entre 50 y 500 caracteres.</span>
+				<textarea id="ta" class="text" type="text" name="information" id="infoProfesor" placeholder="Cuentanos algo sobre ti" onchange="check_ta()"></textarea>
+			</center>
+		</div>
+		<input class="send" type="button"  value="Actualizar!" onclick="submit_form()">
+		</form>
+		<br>
+		<br>
+	</div>
+</div>
+<div id="profileUpdate" class="modal">
+	<div class="modal-content">
+		<form action="/upload_profile_pic" enctype="multipart/form-data" method="post" id="formPic">
+		<div id="textoProfesor">
+			<h3>Actualiza tu información</h3>
+			<center>
+				<input type="file" accept="image/*" onchange="validate(this);" name="image">
+			</center>
+		</div>
+		<input class="send" type="button"  value="Actualizar!" onclick="submit_pic()">
+		</form>
+		<br>
+		<br>
+	</div>
+</div>
+{% endif %}
+
+{% if student_profile %}
+<div id="update" class="modal">
+	<div class="modal-content">
+		<h2>Escribe tu reseña</h2>
+		<form action="/ratings/{{teacher_id}}" method="post" id="formData">
+		<div>
+			<input type="text" class="text" name="title" id="review_titulo" placeholder="Escribe un titulo">
+			<input type="text" class="text" name="value" id="review_titulo" placeholder="Escribe un titulo">
+			<textarea class="text" type="text" name="content" id="review_comentario" placeholder="Escribe un comentario"></textarea>
+		</div>
+		<input class="send" type="button"  value="Actualizar!" onclick="submit_form()">
+		</form>
+		<br>
+		<br>
+	</div>
+</div>
+{% endif %}
+
+
+{% include "header_searchbar.html" %}
+
+<br>
+
+<div id="wrapper">
+
+	<div class="infoProfesor">
+		<div id="nombreProfesor">
+			<center>
+			<div id="perfilImagen">
+				<img src="/static/images/profile_pictures/teacher/{{teacher_id}}??dummy={{ now.second }}" onerror="this.src='/static/images/default_profile.png'" style="width:100%">
+				{% if user_profile %}
+				<div class="centered" onclick="show_pic()">Pulse aquí para cambiar su foto</div>
+				{% endif %}
+			</div>
+			<p id="teacherName">Nombre del Profesor</p>
+			</center>
+			<div class="ratingpromedioProfesor" style="width: 80px; margin: 5px auto;">
+				<span class="stars" id="avgRating"></span>
+			</div>
+		</div>
+
+		<div id="bioProfesor">
+
+			<h2>Acerca de mi</h2>
+			{% if user_profile %}
+				<input type="button" class="send" name="update" onclick="show_update()" value="Editar">
+			{% endif %}
+			<br>
+			<p id="teacherInformation"></p>
+
+			<br>
+
+			<h2>Cursos</h2>
+			{% if user_profile %}
+				<a href="/update_subjects">-Actualizar los cursos</a>
+			{% endif %}
+			<br><br>
+
+			<p id="teacherSubjects"></p>
+
+			<br>
+
+			<h2>Correo Electrónico</h2>
+			<br>
+			<p id="teacherUsername"></p>
+		</div>
+	</div>
+
+	<div id="reviewsProfesor">
+		<h2>Reseñas</h2>
+		{% if student_profile %}
+			<span onclick="show_update()">-Agregar reseña</span>
+		{% endif %}
+	</div>
+
+</div>
+
+</body>
+
+<script type="text/javascript">
+
+//update Information
+
+var modal = document.getElementById('update');
+
+function show_update(){
+	modal.style.display = 'block';
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    if (event.target == modal2) {
+        modal2.style.display = "none";
+    }
+}
+
+send = [true,true,true];
+
+function check_str(id1, id2, i){
+	var elem = document.getElementById(id1);
+	var inp = document.getElementById(id2);
+	var str = inp.value;
+	if(!/[^a-zA-Z]/.test(str) && str.length > 0 && str.length <= 50){
+		send[i] = true;
+		elem.style.display = 'none';
+		return;
+	}
+	elem.style.display = 'block';
+	send[i]=false;
+}
+
+function check_ta(){
+	var elem = document.getElementById('errorta');
+	var inp = document.getElementById('ta');
+	var str = inp.value;
+	if(str.length > 50 && str.length <= 500){
+		send[2] = true;
+		elem.style.display = 'none';
+		return;
+	}
+	elem.style.display = 'block';
+	send[2]=false;
+}
+
+function submit_form(){
+	for(var i = 0; i<3; i++)
+		if(!send[i])
+			return alert("Por favor complete adecuadamente todos los casilleros.");
+	return document.getElementById("formData").submit();
+}
+
+//update profile pic
+
+var pic_state = false;
+
+var modal2 = document.getElementById('profileUpdate');
+
+function show_pic(){
+	modal2.style.display = 'block';
+}
+
+function validate(input){
+    var URL = window.URL || window.webkitURL;
+    var file = input.files[0];
+    if (file) {
+        var image = new Image();
+        image.onload = function() {
+            if (this.width) {
+                pic_state = true;
+            }
+            else{
+            	pic_state = false;
+            	alert("Por favor ingrese una imagen válida.")
+            }
+        };
+        image.src = URL.createObjectURL(file);
+        return;
+    }
+    pic_state = false;
+}
+
+function submit_pic(){
+	if(pic_state)
+		return document.getElementById("formPic").submit();
+	alert("Por favor suba una foto válida.")
+}
+
+
+
+	$.fn.stars = function() {
+	    return $(this).each(function() {
+	        // Get the value
+	        var val = parseFloat($(this).html());
+	        // Make sure that the value is in 0 - 5 range, multiply to get width
+	        var size = Math.max(0, (Math.min(5, val))) * 16;
+	        // Create stars holder
+	        var $span = $('<span />').width(size);
+	        // Replace the numerical value with stars
+	        $(this).html($span);
+	    });
+	}
+
+	teacher_id = {{ teacher_id }};
+
+	teacher_url = "/teachers/" + teacher_id;
+	subject_url = "/teacher_subject/teacher/" + teacher_id;
+	
+	$.getJSON(teacher_url, function(teacher){
+		$("#teacherName").html(teacher.name + " " + teacher.lastname);
+		$("#teacherInformation").html(teacher.information);
+		$("#teacherUsername").html(teacher.username);
+		{% if user_profile %}
+			$("#formName").val(teacher.name);
+			$("#formLastname").val(teacher.lastname);
+			$("#ta").html(teacher.information);
+		{% endif %}
+		var avgRating = 0;
+		if(teacher.numRating == 0)
+			avgRating = 5;
+		else
+			avgRating = teacher.sumRating/teacher.numRating;
+		$("#avgRating").html(avgRating);
+	});
+
+	$.getJSON(subject_url, function(subject){
+		var temp = "" ;
+		$.each(subject, function(i,sub){
+			temp = temp + sub.name +", ";
+		});
+		temp = temp.slice(0, temp.length - 2);
+		$("#teacherSubjects").html(temp);
+	});
+
+	$.getJSON('/ratings/teacher/'+teacher_id, function(ratings){
+		$.each(ratings, function(i, rat){
+			var a = "<div class = 'review'><span class='title'>";
+			a = a + rat.title + "</span>"
+			a = a + "<div class='ratingProfesor'><span class='stars'>"+rat.value+"</span></div>"
+			a = a + "<p>" + rat.content + "</p></div>"
+			$("#reviewsProfesor").append(a);
+		});
+		$('span.stars').stars();
+	});
+
+</script>
+
+
+</html>

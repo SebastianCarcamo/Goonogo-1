@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Registrate!</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/header.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/register.css">
+	<script src="static/js/libs/jquery-3.3.1.js"></script>
+	<script src="static/js/register.js"></script>
+</head>
+
+
+<body>
+	<div id="header">
+		<div id="headerWrapper">
+			<img src="static/images/Logo2.png" style=" height: 4vh; margin-top: 2vh;">
+		</div>
+	</div>
+
+	<br>
+
+	<div id="wrapper">
+		<div id="choose-type">
+			<span id="left" class ="selected" onclick="change(false, 'left', 'right')">Estudiante</span>
+			<span id="right" class="unselected" onclick="change(true, 'right', 'left')">Profesor</span>
+		</div>
+		<form action="/students" method="post" id="formData" >
+		<center>
+		<div id="register-form">
+				<span class="error" style="display: none" id ="errorName">El nombre debe tener menos de 50 caracteres y solo contener caractes alfabéticos</span>
+				<input class="text" type="text" name="name" placeholder="Nombre" id="formName" onchange="check_str('errorName', 'formName', 0)">
+
+				<span class="error" style="display: none" id="errorLastname">El apellido debe tener menos de 50 caracteres y solo contener caractes alfabéticos.</span>
+				<input class="text" type="text" name="lastname" id ="formLastname" placeholder="Apellidos" onchange="check_str('errorLastname', 'formLastname', 1)">
+
+				<span class="error" style="display: none" id="errorta">La descripción debe contener entre 50 y 500 caracteres.</span>
+				<textarea id="ta" rows="5" class="text invisible" name="information" placeholder="Cuentanos un poco sobre ti...(Trabajo, estudios, disponibilidad" onchange="check_ta()"></textarea>
+
+				<span class="error" style="display: none"  id="errorUsername">Ese nombre de usuario ya esta tomado, por favor elija otro.</span><input class="text" type="email" name="username" id="formUsername" placeholder="Correo Electrónico" onchange="check_username()">
+
+				<span class="error" style="display: none" id="errorPassword">La contraseña debe tener por lo menos 5 caracteres y al menos un caracter no alfanumerico.</span>
+				<input class="text" type="password" name="password" id="formPassword" placeholder="Contraseña" onchange="check_password()">
+		</div>
+		</center>
+		<input type="button" class="send" value="Siguiente" onclick="submit_form()">
+		</form>
+	</div>
+</body>
+
+</html>	

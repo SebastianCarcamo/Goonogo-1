@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Goonogo</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/header.css">
+</head>
+
+
+
+<style type="text/css">
+	*{
+		margin:0;
+		padding: 0;
+		font-family: Helvetica Neue;
+		font-weight: 300;
+	}
+
+
+	#wrapper{
+		width: 40vw;
+		margin:auto;
+		margin-top: 10vh;
+	}
+
+	.text{
+		height: 25px;
+		width: 400px;
+		display: block;
+		margin: 10px;
+		font-size: 17px;
+		padding: 0 5px 0 5px;
+		border-radius: 10px;
+	}
+
+	#register-form{
+		box-sizing: border-box;
+		border-style: solid;
+		border-color: #a3c5d9;
+		border-width: 2px;
+		width: 40vw;
+		border-radius: 20px 20px 20px 20px;
+		margin-bottom: 3vh;
+		padding: 5vh 0;
+	}
+
+	.send{
+		box-sizing: border-box;
+		display: inline-block;
+		text-align: center;
+		font-size: 17px;
+		line-height: 39px;
+		width: 8vw;
+		height: 40px;
+		border-style: none;
+		background:#a3c5d9;
+		border-radius: 10px;
+		box-shadow: 0 3px #4a6270;
+		cursor: pointer;
+		float: right;
+		outline: none;
+	}
+
+	.send:hover{
+		background: #81A3B7;
+	}
+
+	.send:active{
+		box-shadow: 0 0 #000;
+		margin-top: 3px;
+	}
+
+	.error{
+		font-size: 14px;
+		color: #F00;
+		font-weight: 400;
+	}
+</style>
+
+
+<body>
+	<div id="header">
+		<div id="headerWrapper">
+			<img src="/static/images/Logo2.png" style=" height: 4vh; margin-top: 2vh;">
+		</div>
+	</div>
+
+	<br>
+
+	<div id="wrapper">
+		<form action="/do_login" method="post" id="formData" >
+		<div id="register-form">
+			<center>
+				{% if error %}
+					<span class="error">Nombre de usuario o contraseña erroneas</span>
+				{% endif %}
+				<input class="text" type="email" name="username"  placeholder="Correo Electrónico">
+				<input class="text" type="password" name="password" placeholder="Contraseña">
+			</center>
+		</div>
+		<input type="submit" class="send" value="Siguiente">
+		</form>
+	</div>
+
+</body>
+
+
+</html>

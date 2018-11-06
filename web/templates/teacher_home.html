@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<style type="text/css">
+	*{
+	margin: 0;
+	padding: 0;
+	font-family: Helvetica Neue;
+	font-weight: 300;
+	}
+
+	#wrapper{
+		width: 80vw;
+		margin: auto;
+		margin-top: 10vh;
+	}
+
+	#profile{
+		display: inline-block;
+		width: 20vw;
+		height: 200px;
+		margin: 30px 10px 30px 10px;
+	}
+	#profile:hover #content{
+		background: blue;
+		border-radius:0 0 20px 20px;
+	}
+	
+	#profile:hover #name{
+		background: blue;
+		border-radius:20px 20px 0 0;
+	}
+
+	#name{
+		background: #fff;
+		padding-top: 10px;
+		height: 40px;
+		width: 20vw;
+		text-align: center;
+		font-size: 19px;
+		border-style:solid;
+		border-color: #81A3B7;
+		border-radius:20px 20px 0 0 ; 
+		box-sizing: border-box;
+	}
+
+	#content{
+		box-sizing: border-box;
+		border-style: solid;
+		height: 400px;
+		border-color: #81A3B7;
+		width: 20vw;
+		margin-top: 2px;
+		border-radius: 0 0 20px 20px;
+	}
+
+	#photo{
+		width: 150px;
+		margin: 10px;
+		border: solid 1px;
+		height: 200px;
+		display: inline-block;
+	}
+
+	#subjects{
+		display: inline-block;
+		font-size: 23px;
+		float: right;
+		margin-right: 40px;
+		margin-top: 10px;
+		padding-top: 20px;
+		height: 180px;
+	}
+
+	#nuevos_profesores{
+		width: 80vw;
+		height: 200px;
+		overflow: auto;
+	}
+
+</style>
+<body>
+
+	<div id="header">
+		<div id="headerWrapper">
+			<img src="Logo2.png" style=" height: 4vh; margin-top: 2vh;">
+			<form id="search">
+				<input type="text" name="searchbar" id="searchbar">
+				<input id="searchbutton" type="submit" name="submit">
+			</form>
+			<span>Mi Cuenta</span><span>Inicio</span>
+		</div>
+	</div>
+
+	<br>
+
+<div id="wrapper">
+	<div id="nuevos_profesores">
+		<div class="titles">
+			<h2>Nuevos profesores</h2>
+		</div>
+		
+		<!-- x5 perfiles -->
+		<div id="profile">
+			<div id="name">Disrupton</div>
+			<div id="content">
+				<div id="photo">
+					<img src="#">
+				</div>
+				<div id="subjects">
+					<ul>
+						<li>Matematicas 1</li>
+						<li>Matematicas 2</li>
+						<li>Fisica</li>
+					</ul>
+				</div>	
+				<div id="stars">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Star_rating_1_of_5.png" style="width: 100%;">
+				</div>
+			</div>
+		</div>		
+		<div id="profile">
+			<div id="name">Disrupton</div>
+			<div id="content">
+				<div id="photo">
+					<img src="#">
+				</div>
+				<div id="subjects">
+					<ul>
+						<li>Matematicas 1</li>
+						<li>Matematicas 2</li>
+						<li>Fisica</li>
+					</ul>
+				</div>	
+				<div id="stars">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Star_rating_1_of_5.png" style="width: 100%;">
+				</div>
+			</div>
+		</div>
+		<div id="profile">
+			<div id="name">Disrupton</div>
+			<div id="content">
+				<div id="photo">
+					<img src="#">
+				</div>
+				<div id="subjects">
+					<ul>
+						<li>Matematicas 1</li>
+						<li>Matematicas 2</li>
+						<li>Fisica</li>
+					</ul>
+				</div>	
+				<div id="stars">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Star_rating_1_of_5.png" style="width: 100%;">
+				</div>
+			</div>
+		</div>
+		<div id="profile">
+			<div id="name">Disrupton</div>
+			<div id="content">
+				<div id="photo">
+					<img src="#">
+				</div>
+				<div id="subjects">
+					<ul>
+						<li>Matematicas 1</li>
+						<li>Matematicas 2</li>
+						<li>Fisica</li>
+					</ul>
+				</div>	
+				<div id="stars">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Star_rating_1_of_5.png" style="width: 100%;">
+				</div>
+			</div>
+		</div>
+		<div id="profile">
+			<div id="name">Disrupton</div>
+			<div id="content">
+				<div id="photo">
+					<img src="#">
+				</div>
+				<div id="subjects">
+					<ul>
+						<li>Matematicas 1</li>
+						<li>Matematicas 2</li>
+						<li>Fisica</li>
+					</ul>
+				</div>	
+				<div id="stars">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Star_rating_1_of_5.png" style="width: 100%;">
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+
+	<div id="top_profesores">
+		<div class="titles">
+			<h2>Mejores profesores</h2>
+		</div>
+
+		<!-- x5 perfiles -->
+	</div>
+
+	<div id="nuevos_cursos">
+		<div class="titles">
+			<h2>Nuevos cursos</h2>
+		</div>
+		
+		<!-- x5 Nuevos cursos -->
+
+	</div>
+
+</div>
+
+</body>
+</html>

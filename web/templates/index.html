@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Goonogo</title>
+</head>
+
+<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+		font-family: Helvetica Neue;
+		font-weight: 300;
+	}
+
+	a:hover, a:visited, a:link, a:active{
+	    text-decoration: none;
+	    color:inherit;
+	}
+
+
+	body{
+		background: #EEEEFF
+		width: 100vw;
+	}
+
+	#wrapper{
+		width: 605px;
+		margin: auto;
+	}
+
+	#header{
+		width: 100vw;
+		height: 45px;
+
+	}
+
+	#header span{
+		height: 40px;
+		width: 130px;
+		padding-top: 20px;
+		text-align: center;
+		border-color: #DDD;
+		border-style: solid;
+		border-width: 0 0 0 1px;
+		float: right;
+		cursor: pointer;
+		-webkit-touch-callout: none;
+	    -webkit-user-select: none;
+	    -khtml-user-select: none;
+	    -moz-user-select: none;
+	    -ms-user-select: none;
+	    user-select: none;
+	}
+
+	#header span:hover{
+		background: #DDD;
+	}
+
+	#header span:active{
+		background: #BBB;
+	}
+
+	#search{
+		margin-top: 15vh;
+	}
+
+	#search span{
+		float: right;
+		height: 60px;
+		border-style:solid;
+		border-width: 0 0 0 1px;
+		padding-left: 10px;
+		width: 300px;
+		padding-bottom: 20px;
+		font-weight: bold;
+		font-size: 25px;
+	}
+
+	#searchbar{
+		margin-top: 20px;
+		display: inline-block;
+		box-sizing: border-box;
+		vertical-align: top;
+		width: 500px;
+		height: 35px;
+		padding: 10px;
+		font-size: 17px;
+		outline:none !important;
+		border-radius: 20px 0 0 20px;
+	}
+
+	#searchbutton{
+		margin-top: 20px;
+		vertical-align: top;
+		box-sizing: border-box;
+		display: inline-block;
+		height: 35px;
+		width: 70px;
+		background: #81A3B7;
+		font-size: 17px;
+		outline:none !important;
+		border-width: 2px 2px 2px 0;
+		border-color: #999 #DDD #DDD #FFF;
+		margin-left: -5px;
+		border-radius: 0 20px 20px 0;
+	}
+
+	#searchbutton:active{
+		background: #7092a6;
+		border-style: none;
+	}
+
+	.dropdown {
+		float: right;
+	    overflow: hidden;
+	    display: inline-block;
+	}
+
+	.dropdown-content {
+	    display: none;
+	    position: absolute;
+	    background-color: #eee;
+	    margin-top: 60px;
+	    margin-left: -170px;
+	    width: 300px;
+	    z-index: 1;
+	    border-radius: 20px 0 20px 20px;
+	}
+
+	.dropdown-content a {
+	    float: none;
+	    color: black;
+	    padding: 12px 16px;
+	    text-decoration: none;
+	    display: block;
+	    text-align: left;
+	}
+
+	.dropdown-content a:hover {
+	    background-color: #ddd;
+	}
+
+	.dropdown:hover .dropdown-content {
+	    display: block;
+	}
+
+	.text{
+		height: 25px;
+		width: 200px;
+		display: block;
+		margin-top: 10px;
+		font-size: 17px;
+		padding: 0 5px 0 5px;
+	}
+
+	.send{
+		margin:20px 50px 30px 0;
+		font-weight: 400;
+		float: right;
+		background: #a3c5d9;
+		height: 30px;
+		width: 50px;
+		display: block;
+		box-shadow: -2px 2px 0px 0px #81A3B7;
+	}
+
+	.send:hover{
+		background: #81A3B7;
+	}
+
+	.send:active{
+		box-shadow: 0px 0px 0px 0px #81A3B7;
+		outline: none;
+	}
+	
+</style>
+
+<body>
+    <div id="header">
+			{% if logged_in %}
+				<a href="/logout"><span class="headeroption">Logout</span></a>
+				<a href="/userAccount"><span class="headeroption">Mi Cuenta</span></a>
+			{% else %}
+			<div class="dropdown">
+				<span class="headeroption">Inicia Sesión</span>
+				<div class="dropdown-content">
+				    <form method="post" action="/do_login" style="margin-top: 40px;">
+				    	<center>
+					    	<input class="text" type="email" name="username" id="username" placeholder="Correo Electronico">
+					    	<input class="text" type="password" name="password" id="password" placeholder="Contraseña">
+				    	</center>
+				    	<input class="send" type="submit" name="submit">
+				    </form>
+			  	</div>
+		  	</div>
+	    	<a href="/register"><span class="headeroption">Registrate</span></a>
+    	{% endif %}
+    </div>
+    <div id="wrapper">
+    	<div id="search">
+	    	<img src="/static/images/Logo.png" height="70px">
+	    	<span>Encontramos al profesor ideal para ti</span>
+	    	<form action="/search" method="post">
+		    	<input id="searchbar" type="text" name="searchbar" placeholder="Busque un curso">
+		    	<input id="searchbutton" type="submit" name="submit" value="Buscar!">
+	    	</form>
+	    </div>
+    </div>
+</body>
+
+</html>

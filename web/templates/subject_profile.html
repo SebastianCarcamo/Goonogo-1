@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Goonogo</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/static/css/header.css">
+	<script src="/static/js/libs/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+		var subject_id = {{subject_id}};
+	</script>
+</head>
+
+<style type="text/css">
+
+*{
+	margin: 0;
+	padding: 0;
+	font-family: Helvetica Neue;
+	font-weight: 300;
+}
+
+body{
+	background: #F7F7F7;
+	overflow: hidden;
+	padding-bottom: 20vh;
+}
+
+a{
+	text-decoration: none;
+	color: #000;
+}
+
+#wrapper{
+	width: 80vw;
+	margin: auto;
+	margin-top: 10vh;
+}
+
+#perfilImagen{
+	border-radius: 50%;
+	overflow: hidden;
+	height: 20vh;
+	width: 20vh;
+}
+
+#perfilImagen img{
+	height: 20vh;
+	width: 20vh;
+}
+
+#subjectBio{
+	display: inline-block;
+	width: 62vw;
+	box-sizing: border-box;
+	text-align: justify;
+	margin-top: 4vh;
+	padding-left: 3vw;
+	height: 40vh;
+	overflow: scroll;
+}
+
+
+#subjectName{
+	width: 15vw;
+	box-sizing: border-box;
+	border-radius: 20px;
+	padding: 20px;
+	display: inline-block;
+	margin-top: 3vh;
+	background: #85A8BD;
+	vertical-align: top;
+	height: 30vh;
+	overflow: scroll;
+}
+
+#subjectName p{
+	font-size: 18px;
+}
+
+.result{
+	width: 50vw;
+	margin: 2vw;
+	background: #a3c5d9;
+	box-sizing: border-box;
+	padding: 2vw;
+	border-radius: 10px;
+}
+.result:hover{
+	background: #85A8BD;
+}
+
+.results{
+	max-height: 40vh;
+	overflow: scroll;
+}
+
+
+</style>
+
+<body>
+
+{% include "header_searchbar.html" %}
+
+<br>
+
+<div id="wrapper">
+
+	<div class="information">
+		<div id="subjectName">
+			<center>
+			<div id="perfilImagen">
+				<img src="/static/images/profile_pictures/subject/{{subject_id}}" onerror="this.src='/static/images/default_profile.png';" style="width:100%">
+			</div>
+			<p id="subjectDispName"></p>
+			</center>
+		</div>
+
+		<div id="subjectBio">
+
+			<h2>Acerca del curso</h2>
+			<br>
+			<p id="subjectSummary"></p>
+
+		</div>
+	</div>
+
+	<div id="subjectTeachers">
+		<h2>Profesores que enseñan este curso</h2>
+	</div>
+
+</div>
+
+</body>
+
+<script type="text/javascript">
+
+$.getJSON('/subjects/'+subject_id, function(subject){
+	$('#subjectDispName').html(subject.name);
+	$('#subjectSummary').html(subject.summary);
+});
+
+$.getJSON('/teacher_subject/subject/'+subject_id, function(teachers){
+	$.each(teachers, function(i, teacher){
+		var a = "<a href='/teacher_profile/"+teacher.id+"'><div class='result'><span class='resultName'>"+teacher.name+" "+teacher.lastname+"</span><br>";
+			a = a + "<p>"+teacher.information+"</p></div></a>";
+			$("<div/>", {html:a}).appendTo("#subjectTeachers");
+	});
+});
+
+</script>
+
+</html>
